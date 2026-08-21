@@ -29,13 +29,16 @@ SECRET_KEY = os.environ.get(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['infuzic.com', 'www.infuzic.com']
 if DEBUG:
     ALLOWED_HOSTS += ['localhost', '127.0.0.1']
 # Vercel sets these automatically for every deployment.
 for env_var in ('VERCEL_URL', 'VERCEL_PROJECT_PRODUCTION_URL'):
     if os.environ.get(env_var):
         ALLOWED_HOSTS.append(os.environ[env_var])
+# Comma-separated list for any other custom domains attached in Vercel.
+if os.environ.get('DJANGO_ALLOWED_HOSTS'):
+    ALLOWED_HOSTS += [h.strip() for h in os.environ['DJANGO_ALLOWED_HOSTS'].split(',') if h.strip()]
 
 CSRF_TRUSTED_ORIGINS = [f'https://{host}' for host in ALLOWED_HOSTS if host not in ('localhost', '127.0.0.1')]
 
