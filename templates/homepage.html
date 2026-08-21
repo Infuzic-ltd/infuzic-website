@@ -1175,6 +1175,7 @@
   }, { threshold: 0.15 });
   revealEls.forEach(el => io.observe(el));
 
+  //count
   // ---- count-up stats ----
   const counters = document.querySelectorAll('[data-count]');
   const cio = new IntersectionObserver((entries) => {
